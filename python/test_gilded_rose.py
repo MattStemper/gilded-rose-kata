@@ -28,7 +28,17 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(9, items[0].quality)         
         gilded_rose.update_quality()
-        self.assertEqual(7, items[0].quality)              
+        self.assertEqual(7, items[0].quality)    
+
+    def test_quality_is_never_negative(self):
+        items = [Item(name="foo", sell_in=1, quality=1)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)       
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)                      
 
 if __name__ == '__main__':
     unittest.main()
