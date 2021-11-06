@@ -61,5 +61,32 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(13, items[0].quality)                                                   
 
+    def test_brie_quality_is_never_more_than_50(self):
+        items = [Item(name="Aged Brie", sell_in=20, quality=49)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)   
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)   
+
+    def test_backstage_pass_quality_is_never_more_than_50(self):
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=8, quality=46)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(48, items[0].quality)           
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)   
+
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=8, quality=47)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(49, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+                       
+          
+
 if __name__ == '__main__':
     unittest.main()
