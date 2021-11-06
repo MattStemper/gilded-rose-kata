@@ -157,5 +157,31 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
 
+    def test_conjured_quality_decrements_2_per_update(self):
+        items = [Item(name="Conjured", sell_in=5, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(8, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(6, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(4, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(2, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+
+    def test_conjured_quality_decrements_4_per_update_when_past_sell_by(self):
+        items = [Item(name="Conjured", sell_in=0, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(6, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(2, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+
 if __name__ == '__main__':
     unittest.main()

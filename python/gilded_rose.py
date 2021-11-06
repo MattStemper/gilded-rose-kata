@@ -8,7 +8,8 @@ class GildedRose(object):
         self.update_functions  = {
             "Sulfuras, Hand of Ragnaros": self.update_sulfuras,
             "Aged Brie": self.update_aged_brie,
-            "Backstage passes to a TAFKAL80ETC concert": self.update_backstage_pass
+            "Backstage passes to a TAFKAL80ETC concert": self.update_backstage_pass,
+            "Conjured": self.update_conjured,
         }
 
     def update_quality(self):
@@ -18,7 +19,6 @@ class GildedRose(object):
     def update_item_quality(self, item):
         updater = self.update_functions.get(item.name, self.update_normal_item)
         updater(item)
-
 
     def update_normal_item(self, item):
         self.decrement_quality(item)
@@ -52,6 +52,15 @@ class GildedRose(object):
 
     def update_sulfuras(self, item):
         item.quality = 80
+
+    def update_conjured(self, item):
+        self.decrement_quality(item)
+        self.decrement_quality(item)
+        if item.sell_in <= 0:
+            self.decrement_quality(item)
+            self.decrement_quality(item)
+
+        self.decrement_sell_in(item)
 
     def decrement_sell_in(self, item):
         item.sell_in = item.sell_in - 1
