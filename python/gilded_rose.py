@@ -5,7 +5,7 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-        self.update_rules  = {
+        self.update_functions  = {
             "Sulfuras, Hand of Ragnaros": self.update_sulfuras,
             "Aged Brie": self.update_aged_brie,
             "Backstage passes to a TAFKAL80ETC concert": self.update_backstage_pass
@@ -13,8 +13,11 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            updater = self.update_rules.get(item.name, self.update_normal_item)
-            updater(item)
+            self.update_item_quality(item)
+
+    def update_item_quality(self, item):
+        updater = self.update_functions.get(item.name, self.update_normal_item)
+        updater(item)
 
 
     def update_normal_item(self, item):
