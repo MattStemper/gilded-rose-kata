@@ -16,6 +16,16 @@ class GildedRose(object):
 
                 item.sell_in = item.sell_in - 1
 
+            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+                self.increment_quality(item)
+                if item.sell_in < 11 and item.sell_in > 0:
+                    self.increment_quality(item)
+                if item.sell_in < 6 and item.sell_in > 0:
+                    self.increment_quality(item)
+                if item.sell_in <= 0:
+                    item.quality = 0
+
+                item.sell_in = item.sell_in - 1
 
             else:
                 if item.name != "Backstage passes to a TAFKAL80ETC concert":
