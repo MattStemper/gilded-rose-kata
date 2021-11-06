@@ -28,12 +28,16 @@ class GildedRose(object):
         self.decrement_sell_in(item)
 
     def update_backstage_pass(self, item):
-        self.increment_quality(item)
-        if item.sell_in < 11 and item.sell_in > 0:
+        if  item.sell_in > 10:
             self.increment_quality(item)
-        if item.sell_in < 6 and item.sell_in > 0:
+        elif 5 < item.sell_in <= 10:
             self.increment_quality(item)
-        if item.sell_in <= 0:
+            self.increment_quality(item)
+        elif 0 < item.sell_in <= 5:
+            self.increment_quality(item)
+            self.increment_quality(item)
+            self.increment_quality(item)
+        else:
             item.quality = 0
 
         self.decrement_sell_in(item)
