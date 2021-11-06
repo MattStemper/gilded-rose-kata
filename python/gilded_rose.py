@@ -31,12 +31,9 @@ class GildedRose(object):
         if  item.sell_in > 10:
             self.increment_quality(item)
         elif 5 < item.sell_in <= 10:
-            self.increment_quality(item)
-            self.increment_quality(item)
+            self.increment_quality(item, 2)
         elif 0 < item.sell_in <= 5:
-            self.increment_quality(item)
-            self.increment_quality(item)
-            self.increment_quality(item)
+            self.increment_quality(item, 3)
         else:
             item.quality = 0
 
@@ -54,24 +51,20 @@ class GildedRose(object):
         item.quality = 80
 
     def update_conjured(self, item):
-        self.decrement_quality(item)
-        self.decrement_quality(item)
+        self.decrement_quality(item, 2)
         if item.sell_in <= 0:
-            self.decrement_quality(item)
-            self.decrement_quality(item)
+            self.decrement_quality(item, 2)
 
         self.decrement_sell_in(item)
 
     def decrement_sell_in(self, item):
         item.sell_in = item.sell_in - 1
 
-    def increment_quality(self, item):
-        if item.quality < 50:
-            item.quality = item.quality + 1
+    def increment_quality(self, item, amount_to_increase=1):
+        item.quality = min(50, item.quality + amount_to_increase)
 
-    def decrement_quality(self, item):
-        if item.quality > 0:
-            item.quality = item.quality - 1
+    def decrement_quality(self, item, amount_to_decrease=1):
+        item.quality = max(0, item.quality - amount_to_decrease)
 
 class Item:
     def __init__(self, name, sell_in, quality):

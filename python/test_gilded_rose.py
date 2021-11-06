@@ -158,7 +158,7 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(0, items[0].quality)
 
     def test_conjured_quality_decrements_2_per_update(self):
-        items = [Item(name="Conjured", sell_in=5, quality=10)]
+        items = [Item(name="Conjured Mana Cake", sell_in=5, quality=10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(8, items[0].quality)
