@@ -86,8 +86,8 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(50, items[0].quality)
 
-    def test_sulfuras_quality_never_decreases(self):
-        items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=3, quality=49)]
+    def test_sulfuras_is_always_80(self):
+        items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=3, quality=80)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         gilded_rose.update_quality()
@@ -95,7 +95,18 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         gilded_rose.update_quality()
         gilded_rose.update_quality()
-        self.assertEqual(49, items[0].quality)
+        self.assertEqual(80, items[0].quality)
+
+    def test_sulfuras_sell_by_doesnt_change(self):
+        items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=3, quality=80)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        gilded_rose.update_quality()
+        self.assertEqual(3, items[0].sell_in)
 
     def test_backstage_pass_quality_increase_more_than_10_days(self):
         items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=12, quality=10)]
