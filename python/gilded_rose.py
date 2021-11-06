@@ -9,7 +9,7 @@ class GildedRose(object):
             "Sulfuras, Hand of Ragnaros": self.update_sulfuras,
             "Aged Brie": self.update_aged_brie,
             "Backstage passes to a TAFKAL80ETC concert": self.update_backstage_pass,
-            "Conjured": self.update_conjured,
+            "Conjured Mana Cake": self.update_conjured,
         }
 
     def update_quality(self):
