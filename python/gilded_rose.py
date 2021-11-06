@@ -5,20 +5,17 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
+        self.update_rules  = {
+            "Sulfuras, Hand of Ragnaros": self.update_sulfuras,
+            "Aged Brie": self.update_aged_brie,
+            "Backstage passes to a TAFKAL80ETC concert": self.update_backstage_pass
+        }
+
     def update_quality(self):
         for item in self.items:
+            updater = self.update_rules.get(item.name, self.update_normal_item)
+            updater(item)
 
-            if item.name == "Sulfuras, Hand of Ragnaros":
-                self.update_sulfuras(item)
-
-            elif item.name == "Aged Brie":
-                self.update_aged_brie(item)
-
-            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-                self.update_backstage_pass(item)
-
-            else:
-                self.update_normal_item(item)
 
     def update_normal_item(self, item):
         self.decrement_quality(item)
@@ -56,7 +53,6 @@ class GildedRose(object):
     def decrement_sell_in(self, item):
         item.sell_in = item.sell_in - 1
 
-
     def increment_quality(self, item):
         if item.quality < 50:
             item.quality = item.quality + 1
@@ -64,7 +60,6 @@ class GildedRose(object):
     def decrement_quality(self, item):
         if item.quality > 0:
             item.quality = item.quality - 1
-
 
 class Item:
     def __init__(self, name, sell_in, quality):
