@@ -97,5 +97,54 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(49, items[0].quality)
 
+    def test_backstage_pass_quality_increase_more_than_10_days(self):
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=12, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(11, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(12, items[0].quality)
+
+    def test_backstage_pass_quality_increase_by_2_when_6_to_10_days_left(self):
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(12, items[0].quality)
+        self.assertEqual(9, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(14, items[0].quality)
+        self.assertEqual(8, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(16, items[0].quality)
+        self.assertEqual(7, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(18, items[0].quality)
+        self.assertEqual(6, items[0].sell_in)
+
+    def test_backstage_pass_quality_increase_by_3_when_1_to_5_days_left(self):
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(13, items[0].quality)
+        self.assertEqual(4, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(16, items[0].quality)
+        self.assertEqual(3, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(19, items[0].quality)
+        self.assertEqual(2, items[0].sell_in)
+        gilded_rose.update_quality()
+        self.assertEqual(22, items[0].quality)
+        self.assertEqual(1, items[0].sell_in)
+
+    # I'm interpretting "after the concert" to mean "sell_by=0"
+    def test_backstage_pass_quality_is_0_after_sell_by(self):
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=1, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(13, items[0].quality)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+
 if __name__ == '__main__':
     unittest.main()
